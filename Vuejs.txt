@@ -1,0 +1,33 @@
+/*
+|-----------------------------------------------------
+| Vue JS
+|-----------------------------------------------------
+*/
+#Single-File Components
+In most build-tool-enabled Vue projects, we author Vue components
+ using an HTML-like file format called Single-File Component 
+ (also known as *.vue files, abbreviated as SFC)
+ 
+#create router vue 2 
+ we need to intall cmd : npm install --save vue-router
+ #and we can import 
+ import VueRouter from 'Vue-router'
+ 
+ #create router vue 3
+  we need to install package router cmd
+  #npm i vue-router@next 
+  
+#create project 
+ npm init vue@latest // create project it include ask your name project 
+ npm install 
+ npm install boostrap // install boostrap
+ 
+Install bootstrap as you would any other JS module in the Vue project using npm install or by adding it to the package.json...
+npm install --save bootstrap
+npm install --save @popperjs/core
+
+Next, add the Bootstrap CSS and JS components to the Vue project entrypoint (ie: src/main.js)...
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+ 
+ 
