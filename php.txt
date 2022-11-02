@@ -1,0 +1,13 @@
+/*
+|-----------------------------------------------------
+| Php
+|-----------------------------------------------------
+*/
+Ex set data-id in HTML
+->data-id = $row['id']
+
+Ex get data_id to PHP
+ -> data("id");
+ 
+undefine Index 
+<?php error_reporting (E_ALL ^ E_NOTICE); ?>

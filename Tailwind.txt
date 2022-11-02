@@ -1,0 +1,41 @@
+/*
+|-----------------------------------------------------
+| TailWind
+|-----------------------------------------------------
+*/
+Install tailwindcss via npm, and create your tailwind.config.js file.
+#npm install tailwindcss
+#npx tailwindcss init
+Add the @tailwind directives for each of Tailwind’s layers to your main CSS file.@tailwind base;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+include to package.json
+{
+  "name":"install_tailwind",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css" : "tailwindcss build src/style.css -o public/style.css"
+  },
+  "keywords": [],
+  "author": {},
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.2.0"
+  }
+}
+and then use terminal 
+# npm run build-css
+
+
+if problem Show ( Unknown at rule `@tailwindcss ) 
+ go to setting search unkown lock at Css->lint:Unknown at Rules and Select option to ignore
+ 
+ run code to show in browser with local
+ terminal
+ #npm install live-server -g // install live-server
+ #live-server public 
+ 

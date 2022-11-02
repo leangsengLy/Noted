@@ -1,0 +1,14 @@
+/*
+|-----------------------------------------------------
+| Concept Structure in Program 
+| Start : 7:32AM at 1/11/2022 Turday by Mr Leang seng
+|-----------------------------------------------------
+*/
+---array object 
+	const data = [
+                {"msgFrom": "helo","msgBody": "Hi there"},
+                {"msgFrom": "lyleangseng","msgBody": "hello"}
+        ]
+        console.log(data[0]); // display all object 
+        console.log(data[0].msgFrom + " " + data[0].msgBody); // display in  object 
+        console.log(data[0].msgFrom); // display only one in  object 

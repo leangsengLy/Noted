@@ -1,0 +1,9 @@
+/*
+|-----------------------------------------------------
+| Github
+|-----------------------------------------------------
+*/
+
+get file from Repository on Github
+open the interminal 
+#git pull origin branch_name 

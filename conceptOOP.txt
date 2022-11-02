@@ -1,0 +1,196 @@
+/*
+|-----------------------------------------------------
+| Concept OOP 
+| Start : 10:54PM at 31/10/2022 Monday by Mr Leang seng
+|-----------------------------------------------------
+*/
+
+#Polymorphism 
+this concept we focus on method have the same name and different by parameter such as ( Int double )
+there are 2type : Static polymorphism , Dynamic polymorphism 
+#polymorphism means defining multiple methods with the same name but with different parameters. Using static polymorphism, 
+ we can perform different tasks with the same method name by passing different parameters.
+		using System;
+	public class Calculator
+	{
+		public int Add(int a, int b)
+		{
+			return a + b;
+		}
+	public double Add(double a, double b)
+		{
+			return a + b;
+		}
+	public int Add(int a, int b, int c)
+		{
+			return a + b + c;
+		}
+	}
+	public class Program
+	{
+		public static void Main()
+		{
+				Calculator calculator = new Calculator();
+				Console.WriteLine(calculator.Add(2, 3));
+				Console.WriteLine(calculator.Add(1.7, 4.8));
+				Console.WriteLine(calculator.Add(2, 3, 4));
+				Console.ReadKey();
+		}
+	}
+ 
+#dynamic polymorphism means overriding a base class method in the derived class. Using dynamic polymorphism,
+ we can override a base class method in the derived class by creating a method with the same name and parameters to perform a different task.
+ This can be achieved by using override & virtual keywords and the inheritance principle.
+ #Note: Fields cannot be overridden; you cannot override fields.
+ 
+	using System;
+	public class Animal
+	{
+		public virtual void Eat()
+		{
+		Console.WriteLine("Eating");
+		}
+	}
+	
+	public class Dog : Animal
+	{
+		public override void Eat()
+		{
+			Console.WriteLine("Dog eating");
+		}
+	}
+	
+	public class Program
+	{
+		public static void Main()
+			{
+				Animal dog1 = new Dog();
+				dog1.Eat();
+				Console.ReadKey();
+			}
+	}	
+	
+Example 03: Let's see another example of dynamic polymorphism in C# where we are having two derived classes.
+	using System;
+	// Base Class
+	public class Shape
+	{
+		public virtual void Draw()
+		{
+			Console.WriteLine("Drawing");
+		}
+	}
+	
+	// Derived Class
+	public class Rectangle : Shape
+	{
+		public override void Draw()
+		{
+			Console.WriteLine("Drawing rectangle");
+		}
+	}
+	
+	public class Circle : Shape
+	{
+		public override void Draw()
+		{
+			Console.WriteLine("Drawing circle");
+		}
+	}
+	
+	public class Program
+	{
+		public static void Main()
+		{
+			Shape shape1 = new Shape();
+			shape1.Draw();
+			shape1 = new Rectangle();
+			shape1.Draw();
+			shape1 = new Circle();
+			shape1.Draw();
+			Console.ReadKey();
+		}
+	}
+	
+	Output
+	
+	Drawing
+	Drawing rectangle
+	Drawing circle
+	
+Example 04: Let's see an example of dynamic polymorphism in C# by overriding a property.
+using System;
+	class Mother
+	{
+		public virtual int Age { get; set; }
+	}
+	
+	class Daughter : Mother
+	{
+		private int age;
+		public override int Age
+		{
+			set{age = value;}
+			get{return age;}
+		}
+	}
+	public class Program
+	{
+		public static void Main()
+		{
+			Daughter daughter = new Daughter();
+			daughter.Age = 20;
+			Console.WriteLine("The daughter's age is " + daughter.Age + " years old.");
+			Console.ReadKey();
+		}
+	}
+	
+Output
+The daughter's age is 20 years old.
+
+Dynamic Polymorphism also refers to the use of the abstract class. When any other class implements an abstract class,
+ the class also has to implement the abstract methods. As different classes can implement the abstract class and can have different implementations of abstract methods,
+ polymorphic behavior is achieved. In this case, we have methods with the same name but different implementations.
+ Example 05: Let's see another example of dynamic polymorphism in C# where we are having two derived classes.
+	using System;
+	public abstract class Shape
+	{
+		public abstract void Draw();
+	}
+	
+	public class Rectangle : Shape
+	{
+		public override void Draw()
+		{
+			Console.WriteLine("Drawing rectangle");
+		}
+	}
+	
+	public class Circle : Shape
+	{
+		public override void Draw()
+		{
+			Console.WriteLine("Drawing circle");
+		}
+	}
+	
+	public class Program
+	{
+		public static void Main()
+		{
+			Shape shape1;
+			shape1 = new Rectangle();
+			shape1.Draw();
+			shape1 = new Circle();
+			shape1.Draw();
+			Console.ReadKey();
+		}
+	}
+Output
+Drawing rectangle
+Drawing circle
+
+------Exception Handling
+Introduction
+ 
+
