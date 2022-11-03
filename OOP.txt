@@ -266,3 +266,288 @@ Example:
 			gzb UP india
 			112 arun
 			gno UP india 
+			
+--Example 04: Multiple Inheritance (Through Interfaces)
+	using System;
+interface IMother {
+	public void DisplayParents() { }
+	public void DisplayMother() { }
+}
+interface IFather {
+	public void DisplayParents() { }
+	public void DisplayFather() { }
+}
+class Child : IMother, IFather {
+	public void DisplayParents() { // implements the interface's method
+	Console.WriteLine("Here are my parents");
+}
+public void DisplayMother() { // implements the Mother interface's method
+	Console.WriteLine("Here is my mother");
+}
+
+public void DisplayFather() { // implements the Father interface's method
+	Console.WriteLine("Here is my father");
+}
+	public void DisplayChild()
+	{
+	Console.WriteLine("I am a child");
+	}
+	}
+class Program {
+static void Main(string[] args)
+{
+Child child = new Child();
+child.DisplayChild();
+child.DisplayMother();
+child.DisplayFather();
+child.DisplayParents();
+Console.ReadKey();
+}
+}
+
+
+
+Example 05: Multiple Inheritance (Through Interfaces)
+using System;
+interface IMother
+{
+	public void DisplayParents();
+	public void DisplayMother();
+}
+
+interface IFather
+{
+	public void DisplayParents();
+	public void DisplayFather();
+}
+
+class Child : IMother, IFather
+{
+	public void DisplayParents()
+	{ // implements the interface's method
+	Console.WriteLine("Here are my parents");
+}
+
+public void DisplayMother()
+{ // implements the Mother interface's method
+	Console.WriteLine("Here is my mother");
+}
+
+public void DisplayFather()
+{ // implements the Father interface's method
+	Console.WriteLine("Here is my father");
+}
+public void DisplayChild()
+{
+	Console.WriteLine("I am a child");
+}
+}
+class Program
+{
+	static void Main(string[] args)
+	{
+		IMother child1 = new Child();
+		child1.DisplayChild(); //Error
+		child1.DisplayMother();
+		child1.DisplayFather(); //Error
+		child1.DisplayParents();
+		IFather child2 = new Child();
+		child2.DisplayChild(); //Error
+		child2.DisplayMother(); //Error
+		child2.DisplayFather();
+		child2.DisplayParents();
+		Child child3 = new Child();
+		child3.DisplayChild();
+		child3.DisplayMother();
+		child3.DisplayFather();
+		child3.DisplayParents();
+		Console.ReadKey();
+	}
+}
+
+
+
+Example 05: Hybrid Inheritance
+using System;
+class Grandparent
+{
+	public void DisplayGrandparent()
+	{
+		Console.WriteLine("Here is my Grandparent");
+	}
+}
+class Parent : Grandparent
+{
+	public void DisplayParent()
+		{
+			Console.WriteLine("Here is my parent");
+		}
+}
+class ChildA : Parent
+{
+	public void DisplayChildA()
+	{
+		Console.WriteLine("I am the child A");
+	}
+}
+class ChildB : Parent
+{
+	public void DisplayChildB()
+		{
+		Console.WriteLine("I am the child B");
+		}
+}
+
+class Program
+{
+	public static void Main(string[] args)
+	{
+		ChildA childA = new ChildA();
+		ChildB childB = new ChildB();
+		childA.DisplayChildA();
+		childA.DisplayParent(); // accessing parent class
+		childA.DisplayGrandparent(); // accessing Grandparent class
+		childB.DisplayChildB();
+		childB.DisplayParent(); // accessing parent class
+		childB.DisplayGrandparent(); // accessing Grandparent class
+		Console.ReadKey();
+	}
+}
+Output
+I am the child A
+Here is my parent
+Here is my Grandparent
+I am the child B
+Here is my parent
+Here is my Grandparent
+
+In above example, multilevel and hierarchical inheritance both are mixed:
+- Multilevel Inheritance: ChildA class inherits Parent class which inherits Grandparent class.
+ChildB class inherits Parent class which inherits Grandparent class.
+- Hierarchical Inheritance: ChildA and ChildB both inherit Parent class.
+
+
+Example 07: Hybrid Inheritance (Through Interfaces)
+using System;
+interface IGrandparent
+{
+	public void DisplayGrandparent(){ }
+}
+
+interface IMother : IGrandparent
+{
+	public void DisplayMother(){ }
+}
+
+interface IFather : IGrandparent
+{
+	public void DisplayFather() { }
+}
+class Child : IMother, IFather
+{
+	public void DisplayGrandparent()
+	{
+		Console.WriteLine("Here is my Grandparent");
+	}
+	public void DisplayFather()
+	{
+		Console.WriteLine("Here is my father");
+	}
+	public void DisplayMother()
+	{
+		Console.WriteLine("Here is my mother");
+	}
+	public void DisplayChild()
+	{
+		Console.WriteLine("I am a child");
+	}
+}
+class Program
+{
+public static void Main(string[] args)
+{
+Child child = new Child();
+child.DisplayChild();
+child.DisplayMother();
+child.DisplayFather();
+child.DisplayGrandparent();
+Console.ReadKey();
+}
+}
+25
+Chea Daly OOAD
+Output
+I am a child
+Here is my mother
+Here is my father
+Here is my Grandparent
+In above example, hierarchical and multiple inheritance both are mixed:
+- Hierarchical Inheritance: Mother and Father interfaces both inherit Grandparent interface.
+- Multiple Inheritance: Child class inherits both Mother and Father interfaces.
+- Multilevel Inheritance: Child class inherits Mother class which inherits Grandparent class.
+Child class inherits Father class which inherits Grandparent class.
+
+------Encapsulation
+Encapsulation means hiding or covering. In C#, encapsulation is achieved by access modifiers. Access modifiers specify the accessibility of an object and all of its members
+You can also limit access to class members. For example, you might need to keep the BankAccount class public for some reason, but make the AccountBalance field and TaxRate field and GetBalanceAfterTax() method private so that no other class can access these class members except the BankAccount class. You can do this as follows:
+Example 01:
+public class BankAccount
+{
+	private double AccountBalance;
+	private double TaxRate;
+	private double GetBalanceAfterTax()
+			{
+			return AccountBalance * TaxRate;
+			}
+}
+
+-Access Modifiers
+The access modifiers that are available in C# are the following:
+• private
+• public
+• protected
+• internal
+• protected internal
+• private protected
+
+private Access Modifiers:
+Objects that implement private access modifier are accessible only inside a class. As a result, we cannot access them outside the class they are created.
+Example 02: In this example, we declare a field as private
+using System;
+class NumberClass
+{
+	private int number = 10;
+}
+
+class Program
+{
+	static void Main()
+	{
+		NumberClass num = new NumberClass();
+		Console.WriteLine(num.number); // Error. We cannot access the number variable
+		// because it has the private access modifier and its only accessible in the
+		// NumberClass class
+	}
+}
+
+
+-public Access Modifiers
+Objects that implement public access modifiers are accessible from everywhere in our project
+Example 04: In this example, we declare a class member as public
+using System;
+class NumberClass
+{
+public int number = 10;
+}
+class Program
+{
+static void Main()
+{
+NumberClass num = new NumberClass();
+Console.WriteLine(num.number); // This is OK. The number variable has the public
+// access modifier.
+Console.ReadKey();
+}
+}
+Output
+10
