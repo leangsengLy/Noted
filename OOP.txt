@@ -551,3 +551,711 @@ Console.ReadKey();
 }
 Output
 10
+
+---Abstraction and Interface 05-11-2022 home at 11:07AM
+Abstraction is the process of hiding certain details and showing only essential information to the user.
+Abstraction can be achieved with either abstract classes or interfaces.
+
+Abstract class: is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class).
+
+Abstract method: can only be used in an abstract class, and it does not have a body. The body is provided by the derived class
+
+Remember from the Inheritance chapter that we use the : symbol to inherit from a class, and that we use the override keyword to override the base class method.
+
+
+------Interface
+An interface is a completely "abstract class", which can only contain abstract methods and properties (with empty bodies):
+interface Animal
+{
+void animalSound(); // interface method (does not have a body)
+void run(); // interface method (does not have a body)
+}
+
+The main features of interfaces
+•Interfaces cannot have a method body; they can only have the method signature.
+• An interface cannot be instantiated, so no object of an interface can be created.
+• One class can extend multiple interfaces.
+
+The body of the interface method is provided by the "implement" class. 
+*Note that you do not have to use the override keyword when implementing an interface:
+Example 04
+using System;
+interface IBankAccount
+{
+	void Debit(double amount);
+	void Credit(double amount);
+}
+
+class BankAccount : IBankAccount
+{
+	public void Debit(double amount)
+	{
+		Console.WriteLine(amount + "$ has been debited from your account!");
+	}
+	public void Credit(double amount)
+	{
+		Console.WriteLine(amount + "$ has been credited to your account!");
+	}
+}
+
+public class Program
+{
+	static void Main()
+	{
+		BankAccount account1 = new BankAccount();
+		account1.Debit(1000);
+		account1.Credit(2000);
+		Console.ReadKey();
+	}
+}
+	
+	Output
+	1000$ has been debited from your account!
+	2000$ has been credited to your account!
+	
+Notes on Interfaces
+• Like abstract classes, interfaces cannot be used to create objects (in the example above, it is not possible to create an "IAnimal" object in the Program class)
+• Interface methods do not have a body - the body is provided by the "implement" class
+• On implementation of an interface, you must override all of its methods
+• Interfaces can contain properties and methods, but not fields/variables
+• Interface members are by default abstract and public
+• An interface cannot contain a constructor (as it cannot be used to create objects).
+
+Why and When To Use Interfaces
+C# does not support "multiple inheritance" (a class can only inherit from one base class). However, it can be achieved with interfaces, because the class can implement multiple interfaces.
+Note: To implement multiple interfaces, separate them with a comma (see example below).
+
+Example 05
+using System;
+	interface IFirstInterface
+	{
+		void Method1(); // interface method
+	}
+	interface ISecondInterface
+	{
+		void Method2(); // interface method
+	}
+
+// Implement multiple interfaces
+class Class1 : IFirstInterface, ISecondInterface
+{
+	public void Method1()
+	{
+		Console.WriteLine("This is Method1");
+	}
+	public void Method2()
+	{
+		Console.WriteLine("This is Method2");
+	}
+}
+
+class Program
+{
+	static void Main(string[] args)
+	{
+		Class1 obj = new Class1();
+		obj.Method1();
+		obj.Method2();
+		Console.ReadKey();
+	}
+}
+Output
+This is Method1
+This is Method2
+
+
+----Partial Class, Sealed Class, Sealed Method and Properties
+Partial ClassThink about a situation where two or more developers need to modify the same class or add new functionalities to the same class. There will be a merge conflict which needs to be resolved.
+You can split a single class into smaller portions that can be placed in different code files, and all these files are combined into a single class file when the application is compiled.
+ One benefit is that different developers can work on different code files at a time. A partial class is created by using a partial keyword.
+ 
+ Example 01: The following is an example of a partial class:
+using System;
+public partial class Animal
+{
+public void Eat()
+{
+Console.WriteLine("Eating");
+}
+}
+public partial class Animal
+{
+public void Move()
+{
+Console.WriteLine("Moving");
+}
+}
+class Program
+{
+static void Main()
+{
+Animal obj = new Animal();
+obj.Eat();
+obj.Move();
+Console.ReadKey();
+
+}
+}
+
+Every part of the partial class definition should be in the same assembly, but you can use a different source file name.
+Example 02
+//Class1.cs
+using System;
+public partial class Animal
+{
+public void Eat()
+{
+Console.WriteLine("Eating");
+}
+}
+//Class2.cs
+using System;
+public partial class Animal
+{
+public void Move()
+{
+Console.WriteLine("Moving");
+}
+}
+//Program.cs
+using System;
+class Program
+{
+static void Main()
+{
+Animal obj = new Animal();
+obj.Eat();
+obj.Move();
+Console.ReadKey();
+}
+}
+Output
+Eating
+Moving
+
+-------Sealed Class
+If a class is sealed, that particular class cannot be inherited by other classes. If any class tries to inherit a sealed class, 
+the compiler will throw an error.
+
+Example 03: Let's look at an example of a sealed class:
+using System;
+sealed class Animal
+{
+	public void Move()
+	{
+		Console.WriteLine("Moving");
+	}
+	
+	public void Eat()
+	{
+		Console.WriteLine("Eating");
+	}
+}
+
+class Program
+{
+public static void Main()
+{
+Animal dog = new Animal();
+dog.name = "Doggy";
+dog.ageInMonths = 1;
+dog.Move();
+dog.Eat();
+}
+}
+
+---Sealed Method
+If we need to stop a method to be overridden, we need to use Sealed method.
+ Sealed method prevents overriding a method of a class.
+ This is a method that is declared with the keyword Sealed and is always used with combination of override keyword.
+ Derived classes will not be able to override this method as it is sealed for overriding.
+ 
+ ----Properties
+ For security reasons, all the fields of a class should not be exposed to the outside world
+ Properties have two accessors: get and set. The get accessor gets values from the field while the set accessor sets values to the field. There is a special keyword for a property, named value. 
+ This represents the value of a field.
+ Usually, inside a class, we declare a data field as private and will provide a set of public SET and GET methods to access the data fields. This is a good programming practice since the data fields are not directly accessible outside the class.
+ We must use the setter and getter methods to access the data fields.
+ Example 05: using setter and getter methods.
+using System;
+class Animal
+{
+private string name;
+private int age;
+public void SetName(string n)
+{
+name = n;
+}
+public string GetName()
+{
+return name;
+}
+public void SetAge(int a)
+{
+age = a;
+}
+public int GetAge()
+{
+return age;
+}
+}
+class Program {
+public static void Main()
+{
+Animal dog = new Animal();
+dog.SetName("Doggy");
+dog.SetAge(2);
+string name = dog.GetName();
+int age = dog.GetAge();
+Console.WriteLine(name + " is " + age + " years old.");
+Console.ReadKey();
+}
+}
+Output
+Doggy is 2 years old.
+
+
+Example 06: using properties.
+using System;
+class Animal
+{
+public string Name { set; get; }
+public int Age { set; get; }
+}
+class Program
+{
+public static void Main()
+{
+Animal dog = new Animal();
+dog.Name = "Doggy";
+dog.Age = 2;
+string name = dog.Name;
+int age = dog.Age;
+Console.WriteLine(name + " is " + age + " years old.");
+Console.ReadKey();
+}
+}
+Output
+Doggy is 2 years old.
+
+
+-----Polymorphism
+
+The word polymorphism means having many forms. There are two types of polymorphism in C#: 
+Static Polymorphism and Dynamic Polymorphism.
+1. Static Polymorphism
+In C#, static polymorphism means defining multiple methods with the same name but with different parameters.
+Using static polymorphism, we can perform different tasks with the same method name by passing different parameters.
+
+Static Polymorphism:
+is also known as Compile Time Polymorphism
+
+using System;
+public class Calculator
+{
+public int Add(int a, int b)
+{
+return a + b;
+}
+public double Add(double a, double b)
+{
+return a + b;
+}
+public int Add(int a, int b, int c)
+{
+return a + b + c;
+}
+}
+public class Program
+{
+public static void Main()
+{
+Calculator calculator = new Calculator();
+Console.WriteLine(calculator.Add(2, 3));
+Console.WriteLine(calculator.Add(1.7, 4.8));
+Console.WriteLine(calculator.Add(2, 3, 4));
+Console.ReadKey();
+}
+}
+Output
+5
+6.5
+9
+
+-----Dynamic Polymorphism
+In c#, dynamic polymorphism means overriding a base class method in the derived class
+Dynamic Polymorphism:
+- is also known as Runtime Polymorphism
+- the role of a method is determined at runtime.
+- is achieved by method overriding.
+
+Example 02: Let's see a simple example of dynamic polymorphism in C#.
+using System;
+public class Animal
+{
+public virtual void Eat()
+{
+Console.WriteLine("Eating");
+}
+}
+public class Dog : Animal
+{
+public override void Eat()
+{
+Console.WriteLine("Dog eating");
+}
+}
+public class Program
+{
+public static void Main()
+{
+Animal dog1 = new Dog();
+dog1.Eat();
+Console.ReadKey();
+}
+}
+Output
+Dog eating
+
+
+Example 03: Let's see another example of dynamic polymorphism in C# where we are having two derived classes.
+using System;
+// Base Class
+public class Shape
+{
+public virtual void Draw()
+{
+Console.WriteLine("Drawing");
+}
+}
+// Derived Class
+public class Rectangle : Shape
+{
+public override void Draw()
+{
+Console.WriteLine("Drawing rectangle");
+}
+}
+public class Circle : Shape
+{
+public override void Draw()
+{
+Console.WriteLine("Drawing circle");
+}
+}
+public class Program
+{
+public static void Main()
+{
+Shape shape1 = new Shape();
+shape1.Draw();
+shape1 = new Rectangle();
+shape1.Draw();
+shape1 = new Circle();
+shape1.Draw();
+Console.ReadKey();
+}
+}
+Output
+Drawing
+Drawing rectangle
+Drawing circle
+
+
+
+Example 04: Let's see an example of dynamic polymorphism in C# by overriding a property.
+using System;
+class Mother
+{
+public virtual int Age { get; set; }
+}
+class Daughter : Mother
+{
+private int age;
+public override int Age
+{
+set
+{
+age = value;
+}
+get
+{
+return age;
+}
+}
+}
+public class Program
+{
+public static void Main()
+{
+Daughter daughter = new Daughter();
+daughter.Age = 20;
+Console.WriteLine("The daughter's age is " + daughter.Age + " years old.");
+Console.ReadKey();
+}
+}
+
+Output
+The daughter's age is 20 years old.
+
+
+Dynamic Polymorphism also refers to the use of the abstract class. When any other class implements an abstract class, the class also has to implement the abstract methods. 
+As different classes can implement the abstract class and can have different implementations of abstract methods,
+
+Example 05: Let's see another example of dynamic polymorphism in C# where we are having two derived classes.
+using System;
+public abstract class Shape
+{
+public abstract void Draw();
+}
+public class Rectangle : Shape
+{
+public override void Draw()
+{
+Console.WriteLine("Drawing rectangle");
+}
+}
+public class Circle : Shape
+{
+public override void Draw()
+{
+Console.WriteLine("Drawing circle");
+}
+}
+public class Program
+{
+public static void Main()
+{
+Shape shape1;
+shape1 = new Rectangle();
+shape1.Draw();
+shape1 = new Circle();
+shape1.Draw();
+Console.ReadKey();
+}
+}
+Output
+Drawing rectangle
+Drawing circle
+
+
+-----Exception Handling
+In C#, exception is an event or object which is thrown at runtime. It is a runtime error which can be handled. If we do not handle the exception, 
+it prints exception message and terminates the program.
+
+
+----Exception Handling Keywords
+In C#, we use 4 keywords to perform exception handling:
+ try, catch, finally, and throw.
+ 
+ Syntax:
+try
+{
+// put the code here that may raise exceptions
+}
+catch
+{
+// handle exception here
+}
+finally
+{
+// final cleanup code
+}
+
+---try/catch
+Any suspected code that may raise exceptions should be put inside a try{ } block. During the execution, if an exception occurs,
+ the flow of the control immediately jumps to the first matching catch block.
+ The catch block is an exception handler block where you can perform some action such as outputting messages.
+ The catch block takes a parameter of an exception type using which you can get the details of an exception.
+ To handle the possible exceptions in the above example, wrap the code inside a try block and handle the exception in the catch block, as shown below
+ 
+ Example 01: An example with try/catch
+using System;
+public class Example
+{
+public static void Main(string[] args)
+{
+try
+{
+int a = 10;
+int b = 0;
+int x = a / b;
+}
+catch
+{
+Console.WriteLine("Exception occurred");
+}
+Console.WriteLine("Rest of the code");
+Console.ReadKey();
+}
+}
+Output
+Exception occurred
+Rest of the code
+
+In the above example, we wrapped this code inside a try block. If an exception occurs inside a try block, then the program will jump to the catch block. Inside a catch block,
+we display a message to instruct the user about his mistake.
+Note that a try block must be followed by catch block. The try block without a catch block will give a compile-time error.
+
+Ideally, a catch block should include a parameter of a built-in or user-defined exception class to get an error detail. The following includes the Exception type parameter that catches all types of exceptions.
+
+Example 03: Exception handling using try catch block.
+using System;
+class Program
+{
+static void Main(string[] args)
+{
+try
+{
+Console.Write("Enter a number: ");
+var num = int.Parse(Console.ReadLine());
+Console.WriteLine("Squre of " + num + " is" + num * num);
+}
+catch (Exception e)
+{
+Console.Write("Error info:" + e.Message);
+}
+Console.ReadKey();
+}
+}
+Output
+Enter a number: a
+Error info:Input string was not in a correct format.
+
+
+---finally
+The finally block will always be executed whether an exception raised or not. Usually, a finally block should be used to release resources, e.g., to close any stream or file objects that were opened in the try block. 
+It must be preceded by catch block.
+Example 04: An example with finally in a case that exception is handled.
+using System;
+public class Example
+{
+public static void Main(string[] args)
+{
+try
+{
+int a = 10;
+int b = 0;
+int x = a / b;
+}
+catch (Exception e)
+{
+Console.WriteLine(e.Message);
+}
+finally
+{
+Console.WriteLine("Finally block is executed");
+}
+Console.WriteLine("Rest of the code");
+Console.ReadKey();
+}
+}
+Output
+System.DivideByZeroException: Attempted to divide by zero.
+Finally, block is executed
+Rest of the code
+
+Example 05: An example with finally in a case that the program executes without error.
+using System;
+public class Example
+{
+public static void Main(string[] args)
+{
+try
+{
+int a = 10;
+int b = 1;
+int x = a / b;
+}
+catch (Exception e)
+{
+Console.WriteLine(e);
+}
+finally
+{
+Console.WriteLine("Finally, block is executed");
+}
+Console.WriteLine("Rest of the code");
+Console.ReadKey();
+}
+}
+Output
+Finally, block is executed
+Rest of the code
+
+-----Exception Filters
+
+ou can use multiple catch blocks with the different exception type parameters. This is called exception filters.
+Exception filters are useful when you want to handle different types of exceptions in different ways.
+
+Example 07: Exception Filters.
+using System;
+class Program
+{
+static void Main(string[] args)
+{
+Console.Write("Please enter a number to be divided by 100: ");
+try
+{
+int num = int.Parse(Console.ReadLine());
+int result = 100 / num;
+Console.WriteLine("100 / {0} = {1}", num, result);
+}
+catch (DivideByZeroException e)
+{
+Console.Write("Cannot divide by zero. Please try again.");
+}
+catch (InvalidOperationException e)
+{
+Console.Write("Invalid operation. Please try again.");
+}
+catch (FormatException e)
+{
+Console.Write("Not a valid format. Please try again.");
+}
+catch (Exception e)
+{
+Console.Write("Error occurred! Please try again.");
+}
+Console.ReadKey();
+}
+}
+
+------User-Defined Exceptions
+C# allows us to create user-defined or custom exception. It is used to make the meaningful exception.
+ To do this, we need to inherit Exception class.
+ 
+Example 08: User-defined exception example.
+using System;
+public class InvalidAgeException : Exception
+{
+public InvalidAgeException(String message) : base(message)
+{
+}
+}
+public class TestUserDefinedException
+{
+static void validate(int age)
+{
+if (age < 18)
+{
+throw new InvalidAgeException("Sorry, Age must be greater than 18");
+}
+}
+public static void Main(string[] args)
+{
+try
+{
+validate(12);
+}
+catch (InvalidAgeException e)
+{
+Console.WriteLine(e.Message);
+}
+Console.WriteLine("Rest of the code");
+Console.ReadKey();
+}
+}
+Output
+Sorry, Age must be greater than 18
+Rest of the code
